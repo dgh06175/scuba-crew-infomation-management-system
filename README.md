@@ -9,32 +9,56 @@
     1. 활동 계획 및 동아리 운영 지원
     2. 회원 정보 일관성 유지
 
-
 ## ⚙️ 기능 목록
 
-### 가두모집 기능
+### 메뉴 선택 기능
+- [ ] 메인 화면에서 아래 기능들을 메뉴로 선택 가능하게 출력한다.
+- [ ] 메뉴 번호를 입력받고 해당 메뉴로 이동한다.
+  - 올바른 숫자가 아닐 경우 예외 발생
 
-- [ ] 지원 내역을 보고 합격, 탈락 여부 결정 가능
-- [ ] 합격 시 동아리원 테이블로 이동
+### 모집 기능
 
-### 동아리 회원 정보 (인적 사항, 스쿠버 관련 정보, 신체 정보)
+- [ ] 지원 내역 출력 `recruitment_application`
+  - [ ] 이름, 학과, 학번, 학년, 지원목적, 자격증여부, 지원이유
+- [ ] 합격시킬 사람 학번 입력 시 동아리원 정보 테이블로 이동
+  - 이미 명단에 존재할 경우 예외 발생
+  - 올바르지 않은 학번일 경우 예외 발생
 
-- [ ] 정보 조회 기능 (세가지 중 골라서 출력)
+### 동아리 회원 정보 (인적 사항, 스쿠버 관련 정보, 신체 정보) 조회 기능
+
+- [ ] 정보 조회 기능
+  - [ ] 인적사항 조회 `club_member_information`
+  - [ ] 스쿠버 관련 정보 조회 `scuba_sxperience`
+    - 스쿠버 정보 앞에 이름 같이 출력
+  - [ ] 신체 정보 조회 `physical_information`
+    - 신체 정보 앞에 이름 같이 출력
+  - [ ] 특정 자격증 인원 조회
+  - [ ] 자격증 별 인원 수 출력
+  - [ ] 특정 로그수 넘은 인원 조회
+  - 추후 정보 업데이트 기능 구현
 
 ### 동아리 활동 기능
 
+- [ ] 진행할 활동 장소 선택 `dive_site`
+  - 개방수역
+    - 자격증 취득
+      - 무슨 자격증인지 선택
+    - 펀다이빙
+  - 제한수역
+- [ ] 동아리원 목록 출력후 활동 가는 인원 선택
 - [ ] 활동 장소에 알맞은 필요사항 출력
-  - 자격증 비교 후 인솔강사 몇명 가야하는지
+  - 자격증 비교 후 인솔강사 몇명 함께해야하는지 출력 `certification`
   - 어떤 사이즈의 슈트 몇개 필요한지
   - 어떤 사이즈의 핀 몇개 필요한지
-
-
 - [ ] 활동 완료 시 동아리 회원 스쿠버 활동 업데이트 기능
   - 개방수역
     - 참여자 로그 수 증가
-    - 자격증 취득 과정 (오픈, 어드, 레스큐, 마스터) 일 경우 자격증 업데이트
-  - 제한수역일 경우 참여자 수영장 교육 횟수 증가
+    - 자격증 취득 과정 (오픈, 어드, 레스큐, 마스터)
+      - 인원 골라서 자격증 업데이트
+  - 제한수역
+    - 참여자 수영장 교육 횟수 증가
 
+- 추후 회비 관련 기능 추가
 
 ## 📊 테이블 명세
 
@@ -89,8 +113,7 @@
 - 제한수역 인원 제한
 
 <details>
-<summary>테이블 생성 MySQL 코드 보기</summary>
-<div markdown="1">
+<summary>테이블 생성 MySQL 코드 보기 (삼각형 클릭)</summary>
 
 ```mysql
 CREATE TABLE recruitment_application (
@@ -114,7 +137,7 @@ CREATE TABLE club_member_information (
     address VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE scuba_experience (
+CREATE TABLE scuba_experience_information (
     student_id INT(10) NOT NULL,
     scuba_certification_name ENUM('NONE', 'OW', 'AOW', 'RESCUE', 'MASTER', 'INSTRUCTOR'),
     restricted_water_training_count INT,
@@ -147,5 +170,55 @@ CREATE TABLE certification (
     restricted_water_limit INT NOT NULL
 );
 ```
-</div>
 </details>
+
+## 클래스 구조
+
+### View
+
+- [ ] **메인 화면** : MainMenuView
+  - 메인 화면 출력, 메뉴 번호로 입력받고 컨트롤러에게 전달
+
+
+- [ ] **지원서 관리 화면** : RecruitmentView
+  - 지원서 목록 전달 받아서 출력하고, 합격 인원의 학번들 입력받아서 반환
+
+
+- [ ] **동아리 회원 정보 조회 화면** : MemberInfoView
+  - 회원 정보 메뉴 화면 출력, 메뉴 번호로 입력받고 알맞은 화면 출력
+
+
+- [ ] **스쿠버 활동 계획 화면** : ActivityPlanView
+  - 활동 장소 목록 전달 받아서 출력
+  - 활동 구분
+  - 활동 완료에 따른 후처리
+
+
+### Controller
+
+- [ ] **프로그램 중앙 컨트롤러** : MainController
+  - 프로그램 시작
+  - 상위 레벨 메뉴 관리
+  - 하위 컨트롤러 조정
+  - 프로그램 종료
+- [ ] **지원서 관리 화면 컨트롤러** : RecruitmentController
+- [ ] **회원 정보 조회 컨트롤러** : MemberController
+- [ ] **스쿠버 활동 계획 컨트롤러** : ActivityController
+
+### Model
+
+- [ ] **자격증 정보** Certification
+
+### Service
+
+- [ ] **비즈니스 로직 담당**
+
+### database
+
+- [ ] **데이터베이스 불러오는 기능** : DatabaseManager
+- [ ] **질의 관련 기능** : QueryExecutor
+
+### util
+
+- [ ] **입력 검증** : InputValidator
+- [ ] **로깅** : Logger
