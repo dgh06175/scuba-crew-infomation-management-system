@@ -1,4 +1,4 @@
-package org.example;
+package management;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Main {
+public class Application {
     private static final String DB_NAME = "scubaDB";
     public static void main(String[] args) {
         String url = "jdbc:mysql://127.0.0.1:3306/scubaDB";
