@@ -1,19 +1,34 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Main {
+    private static final String DB_NAME = "scubaDB";
     public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        String url = "jdbc:mysql://127.0.0.1:3306/scubaDB";
+        String userName = "root";
+        String password = "0000";
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        try {
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from scubaDB.club_member_information;");
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+            resultSet.next();
+            String name = resultSet.getString("name");
+            System.out.println(name);
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+            System.out.println("연결 성공");
+        } catch (SQLException e) {
+            System.out.println("SQLException 오류 발생");
+            throw new RuntimeException(e);
         }
     }
 }
