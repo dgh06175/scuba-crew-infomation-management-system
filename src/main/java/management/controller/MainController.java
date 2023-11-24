@@ -25,7 +25,7 @@ public class MainController {
             switch (choice) {
                 case 1:
                     System.out.println("1번 선택");
-                    //memberController.handleRequest();
+                    memberController.handleRequest();
                     break;
                 case 2:
                     System.out.println("2번 선택");

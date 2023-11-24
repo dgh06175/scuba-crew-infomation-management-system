@@ -1,16 +1,17 @@
 package management.model;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "recruitment_application")
-public class RecruitmentApplication {
+@Table(name = "club_member_information")
+public class ClubMemberInformation {
     @Id
     @Column(name = "student_id")
     private Long studentId;
@@ -29,13 +30,4 @@ public class RecruitmentApplication {
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "purpose_of_joining")
-    private String purposeOfJoining;
-
-    @Column(name = "scuba_certification_name")
-    private String scubaCertificationName;
-
-    @Column(name = "reason_for_joining")
-    private String reasonForJoining;
 }

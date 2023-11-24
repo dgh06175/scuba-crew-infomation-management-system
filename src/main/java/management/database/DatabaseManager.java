@@ -1,62 +1,56 @@
 package management.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.EntityTransaction;
+import lombok.Getter;
 
+@Getter
 public class DatabaseManager {
-    private static final String DB_NAME = "scubaDB";
-    private static final int port = 3306;
-    private static final String url = "jdbc:mysql://127.0.0.1:" + port + "/" + DB_NAME;
-    private static final String userName = "root";
-    private static final String password = "0000";
+    private final EntityManager entityManager;
 
-    /**
-     * 데이터베이스 연결
-     * @return Connection
-     */
-    private Connection getConnection() {
+    public DatabaseManager() {
+        entityManager = Persistence.createEntityManagerFactory("ScubaClubPU").createEntityManager();
+    }
+
+    public <T> T find(Class<T> entityClass, Object primaryKey) {
+        return entityManager.find(entityClass, primaryKey);
+    }
+
+    public void save(Object entity) {
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            return DriverManager.getConnection(url, userName, password);
-        } catch (SQLException e) {
-            System.out.println("[ERROR] 데이터베이스 연결 실패: " + e.getMessage());
-            throw new RuntimeException(e);
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            throw e;
         }
     }
 
-    /**
-     * 쿼리 실행을 위한 메서드
-     * 이 메서드의 반환값을 사용한 뒤에는 반드시 close 해야한다.
-     * @param query 질의 문자열
-     * @return ResultSet
-     */
-    public ResultSet executeQuery(String query) throws RuntimeException{
+    public <T> T update(T entity) {
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            Connection connection = getConnection();
-            Statement statement = connection.createStatement();
-            return statement.executeQuery(query);
-
-        } catch (SQLException e) {
-            System.out.println("[ERROR] 쿼리 실행 오류: " + e.getMessage());
-            throw new RuntimeException(e);
+            transaction.begin();
+            T mergedEntity = entityManager.merge(entity);
+            transaction.commit();
+            return mergedEntity;
+        } catch (Exception e) {
+            transaction.rollback();
+            throw e;
         }
     }
 
-    public static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
+    public void delete(Object entity) {
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            if (resultSet != null && !resultSet.isClosed()) {
-                resultSet.close();
-            }
-            if (statement != null && !statement.isClosed()) {
-                statement.close();
-            }
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.out.println("[ERROR] 자원 해제 오류: " + e.getMessage());
+            transaction.begin();
+            entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            throw e;
         }
     }
 }
