@@ -12,8 +12,8 @@
 ## ⚙️ 기능 목록
 
 ### 메뉴 선택 기능
-- [ ] 메인 화면에서 아래 기능들을 메뉴로 선택 가능하게 출력한다.
-- [ ] 메뉴 번호를 입력받고 해당 메뉴로 이동한다.
+- [x] 메인 화면에서 아래 기능들을 메뉴로 선택 가능하게 출력한다.
+- [x] 메뉴 번호를 입력받고 해당 메뉴로 이동한다.
   - 올바른 숫자가 아닐 경우 예외 발생
 
 ### 모집 기능
@@ -26,11 +26,11 @@
 
 ### 동아리 회원 정보 (인적 사항, 스쿠버 관련 정보, 신체 정보) 조회 기능
 
-- [ ] 정보 조회 기능
-  - [ ] 인적사항 조회 `club_member_information`
-  - [ ] 스쿠버 관련 정보 조회 `scuba_sxperience`
+- [x] 정보 조회 기능
+  - [x] 인적사항 조회 `club_member_information`
+  - [x] 스쿠버 관련 정보 조회 `scuba_sxperience`
     - 스쿠버 정보 앞에 이름 같이 출력
-  - [ ] 신체 정보 조회 `physical_information`
+  - [x] 신체 정보 조회 `physical_information`
     - 신체 정보 앞에 이름 같이 출력
   - [ ] 특정 자격증 인원 조회
   - [ ] 자격증 별 인원 수 출력
@@ -176,7 +176,7 @@ CREATE TABLE certification (
 
 ### View
 
-- [ ] **메인 화면** : MainMenuView
+- [x] **메인 화면** : MainMenuView
   - 메인 화면 출력, 메뉴 번호로 입력받고 컨트롤러에게 전달
 
 
@@ -184,7 +184,7 @@ CREATE TABLE certification (
   - 지원서 목록 전달 받아서 출력하고, 합격 인원의 학번들 입력받아서 반환
 
 
-- [ ] **동아리 회원 정보 조회 화면** : MemberInfoView
+- [x] **동아리 회원 정보 조회 화면** : MemberInfoView
   - 회원 정보 메뉴 화면 출력, 메뉴 번호로 입력받고 알맞은 화면 출력
 
 
@@ -196,18 +196,18 @@ CREATE TABLE certification (
 
 ### Controller
 
-- [ ] **프로그램 중앙 컨트롤러** : MainController
+- [x] **프로그램 중앙 컨트롤러** : MainController
   - 프로그램 시작
   - 상위 레벨 메뉴 관리
   - 하위 컨트롤러 조정
   - 프로그램 종료
 - [ ] **지원서 관리 화면 컨트롤러** : RecruitmentController
-- [ ] **회원 정보 조회 컨트롤러** : MemberController
+- [x] **회원 정보 조회 컨트롤러** : MemberController
 - [ ] **스쿠버 활동 계획 컨트롤러** : ActivityController
 
 ### Model
 
-- [ ] **자격증 정보** Certification
+- [x] **DB 정보들** JPA 사용해서 엔티티 정의
 
 ### Service
 
@@ -215,10 +215,11 @@ CREATE TABLE certification (
 
 ### database
 
-- [ ] **데이터베이스 불러오는 기능** : DatabaseManager
+- [x] **데이터베이스 불러오는 기능** : DatabaseManager
 - [ ] **질의 관련 기능** : QueryExecutor
 
 ### util
 
-- [ ] **입력 검증** : InputValidator
+- [ ] **입력 검증** : InputParser
 - [ ] **로깅** : Logger
+- [ ] **재시작 로직** : RetryUtils

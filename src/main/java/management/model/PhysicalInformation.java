@@ -1,7 +1,10 @@
 package management.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -40,4 +43,8 @@ public class PhysicalInformation {
     public enum Gender {
         MALE, FEMALE
     }
+
+    @OneToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id", foreignKey = @ForeignKey(name = "FK_club_member_information"))
+    private ClubMemberInformation clubMemberInformation;
 }
