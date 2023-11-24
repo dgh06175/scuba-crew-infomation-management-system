@@ -15,4 +15,12 @@ public class InputParser {
         }
         return Integer.parseInt(input);
     }
+
+    public static String getString() {
+        String input = scanner.nextLine();
+        if (input.isEmpty() || input.isBlank()) {
+            throw new IllegalArgumentException("올바른 문자열을 입력해 주세요.");
+        }
+        return input;
+    }
 }

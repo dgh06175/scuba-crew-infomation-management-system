@@ -1,7 +1,9 @@
 package management.view;
 
 import static management.util.InputParser.getNaturalNumber;
+import static management.util.InputParser.getString;
 
+import java.util.Map;
 import management.model.ClubMemberInformation;
 import java.util.List;
 import management.model.PhysicalInformation;
@@ -18,6 +20,9 @@ public class MemberInfoView {
         System.out.println("1. 인적 사항 조회");
         System.out.println("2. 스쿠버 관련 정보 조회");
         System.out.println("3. 신체 정보 조회");
+        System.out.println("4. 자격증 인원 조회");
+        System.out.println("5. 일정 로그 개수 이상 인원 조회");
+        System.out.println("6. 자격증별 인원수 조회");
         System.out.println("0. 메인 메뉴로 나가기");
     }
 
@@ -28,6 +33,16 @@ public class MemberInfoView {
 
     public void displayInvalidOption() {
         System.out.println("잘못된 옵션 입력입니다.");
+    }
+
+    public String readCertification() {
+        System.out.print("조회할 자격증 이름을 입력하세요: ");
+        return getString();
+    }
+
+    public int readLogCount() {
+        System.out.print("조회할 로그 수를 입력하세요: ");
+        return getNaturalNumber();
     }
 
     public void displayMembers(List<ClubMemberInformation> members) {
@@ -63,5 +78,12 @@ public class MemberInfoView {
 
             System.out.printf(PHYSICAL_PRINT_FORMAT, name, age, gender, height, weight, shoeSize, healthNotes);
         }
+    }
+
+    public void displayCertificationCounts(Map<String, Long> certificationCounts) {
+        System.out.println("자격증 별 인원 수:");
+        certificationCounts.forEach((certification, count) -> {
+            System.out.println(certification + ": " + count);
+        });
     }
 }

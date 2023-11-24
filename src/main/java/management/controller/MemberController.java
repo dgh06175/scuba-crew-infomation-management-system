@@ -1,6 +1,7 @@
 package management.controller;
 
 import java.util.Arrays;
+import java.util.Map;
 import management.model.ClubMemberInformation;
 import management.model.PhysicalInformation;
 import management.model.ScubaExperienceInformation;
@@ -23,7 +24,7 @@ public class MemberController {
         boolean running = true;
         while (running) {
             memberInfoView.displayMenu();
-            int choice = requestMenuNumber(1, 2, 3, 0);
+            int choice = requestMenuNumber(1, 2, 3, 4, 5, 6, 0);
             switch (choice) {
                 case 1: // 인적 사항 조회
                     displayMemberInformation();
@@ -33,6 +34,15 @@ public class MemberController {
                     break;
                 case 3: // 신체 정보 조회
                     displayPhysicalInformation();
+                    break;
+                case 4: // 자격증 인원 조회
+                    displayMembersWithCertification();
+                    break;
+                case 5: // 일정 로그 개수 이상 인원 조회
+                    displayMembersLogCount();
+                    break;
+                case 6: // 자격증별 인원수 조회
+                    displayMembersByCertificationCount();
                     break;
                 case 0:
                     running = false;
@@ -70,5 +80,22 @@ public class MemberController {
     private void displayPhysicalInformation() {
         List<PhysicalInformation> physicalInformation = memberService.getAllPhysical();
         memberInfoView.displayPhysicalInformation(physicalInformation);
+    }
+
+    private void displayMembersWithCertification() {
+        String certification = memberInfoView.readCertification();
+        List<ClubMemberInformation> members = memberService.getMembersWithCertification(certification);
+        memberInfoView.displayMembers(members);
+    }
+
+    private void displayMembersLogCount() {
+        int logCount = memberInfoView.readLogCount();
+        List<ClubMemberInformation> members = memberService.getMembersWithLogCountGreaterThan(logCount);
+        memberInfoView.displayMembers(members);
+    }
+
+    private void displayMembersByCertificationCount() {
+        Map<String, Long> certificationCounts = memberService.getMemberCountByCertification();
+        memberInfoView.displayCertificationCounts(certificationCounts);
     }
 }
