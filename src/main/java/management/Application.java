@@ -11,17 +11,21 @@ import management.controller.MainController;
 import management.controller.MemberController;
 import management.controller.RecruitmentController;
 import management.database.DatabaseManager;
+import management.service.ActivityService;
 import management.service.MemberService;
+import management.view.ActivityView;
 import management.view.MainMenuView;
 import management.view.MemberInfoView;
 
 public class Application {
     public static void main(String[] args) {
         DatabaseManager dbManager = new DatabaseManager();
-        MemberService memberService = new MemberService(dbManager.getEntityManager());
+        EntityManager entityManager = dbManager.getEntityManager();
+        MemberService memberService = new MemberService(entityManager);
+        ActivityService activityService = new ActivityService(entityManager);
         new MainController(
                 new MemberController(memberService, new MemberInfoView()),
-                new ActivityController(),
+                new ActivityController(activityService, new ActivityView()),
                 new RecruitmentController(),
                 new MainMenuView()
         ).run();

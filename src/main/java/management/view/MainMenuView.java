@@ -1,8 +1,6 @@
 package management.view;
 
-import static management.util.InputParser.getNaturalNumber;
-
-import java.util.Scanner;
+import static management.util.InputUtil.getNaturalNumber;
 
 public class MainMenuView {
     public void displayMenu() {

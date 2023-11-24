@@ -1,7 +1,7 @@
 package management.view;
 
-import static management.util.InputParser.getNaturalNumber;
-import static management.util.InputParser.getString;
+import static management.util.InputUtil.getNaturalNumber;
+import static management.util.InputUtil.getString;
 
 import java.util.Map;
 import management.model.ClubMemberInformation;

@@ -1,11 +1,9 @@
 package management.util;
 
-import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class InputParser {
+public class InputUtil {
     private static Scanner scanner = new Scanner(System.in);
 
     public static int getNaturalNumber() {

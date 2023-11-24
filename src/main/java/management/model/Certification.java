@@ -27,6 +27,4 @@ public class Certification {
 
     @Column(name = "restricted_water_limit")
     private Integer restrictedWaterLimit;
-
-    // ... 필요한 경우 추가 메서드나 필드
 }
