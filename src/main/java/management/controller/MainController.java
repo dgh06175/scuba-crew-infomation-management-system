@@ -30,7 +30,7 @@ public class MainController {
                     activityController.run();
                     break;
                 case 3:
-                    //recruitmentController.run();
+                    recruitmentController.run();
                     break;
                 case 0:
                     running = false;

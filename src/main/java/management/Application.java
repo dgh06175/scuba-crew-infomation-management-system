@@ -13,20 +13,24 @@ import management.controller.RecruitmentController;
 import management.database.DatabaseManager;
 import management.service.ActivityService;
 import management.service.MemberService;
+import management.service.RecruitmentService;
 import management.view.ActivityView;
 import management.view.MainMenuView;
 import management.view.MemberInfoView;
+import management.view.RecruitmentView;
 
 public class Application {
     public static void main(String[] args) {
         DatabaseManager dbManager = new DatabaseManager();
         EntityManager entityManager = dbManager.getEntityManager();
+
         MemberService memberService = new MemberService(entityManager);
         ActivityService activityService = new ActivityService(entityManager);
+        RecruitmentService recruitmentService = new RecruitmentService(entityManager);
         new MainController(
                 new MemberController(memberService, new MemberInfoView()),
                 new ActivityController(activityService, new ActivityView()),
-                new RecruitmentController(),
+                new RecruitmentController(recruitmentService, new RecruitmentView()),
                 new MainMenuView()
         ).run();
     }
