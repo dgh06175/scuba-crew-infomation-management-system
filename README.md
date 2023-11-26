@@ -18,9 +18,9 @@
 
 ### 모집 기능
 
-- [ ] 지원 내역 출력 `recruitment_application`
-  - [ ] 이름, 학과, 학번, 학년, 지원목적, 자격증여부, 지원이유
-- [ ] 합격시킬 사람 학번 입력 시 동아리원 정보 테이블로 이동
+- [x] 지원 내역 출력 `recruitment_application`
+  - [x] 이름, 학과, 학번, 학년, 지원목적, 자격증여부, 지원이유
+- [x] 합격시킬 사람 학번 입력 시 동아리원 정보 테이블로 이동
   - 이미 명단에 존재할 경우 예외 발생
   - 올바르지 않은 학번일 경우 예외 발생
 
@@ -180,7 +180,7 @@ CREATE TABLE certification (
   - 메인 화면 출력, 메뉴 번호로 입력받고 컨트롤러에게 전달
 
 
-- [ ] **지원서 관리 화면** : RecruitmentView
+- [x] **지원서 관리 화면** : RecruitmentView
   - 지원서 목록 전달 받아서 출력하고, 합격 인원의 학번들 입력받아서 반환
 
 
@@ -188,7 +188,7 @@ CREATE TABLE certification (
   - 회원 정보 메뉴 화면 출력, 메뉴 번호로 입력받고 알맞은 화면 출력
 
 
-- [ ] **스쿠버 활동 계획 화면** : ActivityPlanView
+- [x] **스쿠버 활동 계획 화면** : ActivityPlanView
   - 활동 장소 목록 전달 받아서 출력
   - 활동 구분
   - 활동 완료에 따른 후처리
@@ -201,9 +201,9 @@ CREATE TABLE certification (
   - 상위 레벨 메뉴 관리
   - 하위 컨트롤러 조정
   - 프로그램 종료
-- [ ] **지원서 관리 화면 컨트롤러** : RecruitmentController
+- [x] **지원서 관리 화면 컨트롤러** : RecruitmentController
 - [x] **회원 정보 조회 컨트롤러** : MemberController
-- [ ] **스쿠버 활동 계획 컨트롤러** : ActivityController
+- [x] **스쿠버 활동 계획 컨트롤러** : ActivityController
 
 ### Model
 
@@ -211,15 +211,14 @@ CREATE TABLE certification (
 
 ### Service
 
-- [ ] **비즈니스 로직 담당**
+- [x] **비즈니스 로직 담당**
 
 ### database
 
 - [x] **데이터베이스 불러오는 기능** : DatabaseManager
-- [ ] **질의 관련 기능** : QueryExecutor
+- [x] **질의 관련 기능** : QueryExecutor
 
 ### util
 
-- [ ] **입력 검증** : InputParser
-- [ ] **로깅** : Logger
-- [ ] **재시작 로직** : RetryUtils
+- [x] **입력 검증** : InputParser
+- [x] **재시작 로직** : RetryUtils
