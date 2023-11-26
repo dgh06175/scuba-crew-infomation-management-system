@@ -1,9 +1,9 @@
 package management.controller;
 
+import static management.util.RetryUtils.requestMenuNumber;
+
 import management.service.ActivityService;
 import management.view.ActivityView;
-import management.model.DiveSite;
-import management.model.Certification;
 import management.model.ClubMemberInformation;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class ActivityController {
         boolean running = true;
         while (running) {
             activityView.displayActivityMenu();
-            int activityType = activityView.chooseActivityType(); // 개방수역, 제한수역 선택
+            int activityType = requestMenuNumber(1, 2, 0);
             switch (activityType) {
                 case 1: // 개방수역
                     activityView.displayOpenWaterActivityMenu();

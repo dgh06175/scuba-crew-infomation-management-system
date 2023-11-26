@@ -1,5 +1,7 @@
 package management.controller;
 
+import static management.util.RetryUtils.requestMenuNumber;
+
 import java.util.Arrays;
 import management.util.RetryUtils;
 import management.view.MainMenuView;
@@ -38,20 +40,6 @@ public class MainController {
                 default:
                     mainMenuView.displayInvalidOption();
             }
-        }
-    }
-
-    private int requestMenuNumber(int...menuNumbers) {
-        return RetryUtils.executeWithRetry(() -> {
-            int userInput = mainMenuView.readUserInput();
-            validateMenuInput(menuNumbers, userInput);
-            return userInput;
-        });
-    }
-
-    private void validateMenuInput(int[] menuNumbers, int userInput) {
-        if (Arrays.stream(menuNumbers).noneMatch(num -> num == userInput)) {
-            throw new IllegalArgumentException("잘못된 메뉴 번호가 입력되었습니다.");
         }
     }
 }

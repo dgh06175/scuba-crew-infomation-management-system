@@ -12,11 +12,6 @@ public class MainMenuView {
         System.out.println("0. 종료");
     }
 
-    public int readUserInput() {
-        System.out.print("옵션을 선택하세요: ");
-        return getNaturalNumber();
-    }
-
     public void displayInvalidOption() {
         System.out.println("잘못된 옵션 입력입니다.");
     }

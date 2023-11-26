@@ -1,6 +1,7 @@
 package management.controller;
 
 import static management.util.InputUtil.getNaturalNumber;
+import static management.util.RetryUtils.requestMenuNumber;
 
 import management.service.RecruitmentService;
 import management.view.RecruitmentView;
@@ -22,7 +23,7 @@ public class RecruitmentController {
         boolean running = true;
         while (running) {
             recruitmentView.displayRecruitmentMenu();
-            int choice = getNaturalNumber();
+            int choice = requestMenuNumber(1, 2, 0);
             switch (choice) {
                 case 1: // 지원 내역 출력
                     displayRecruitmentApplications();

@@ -17,11 +17,6 @@ public class ActivityView {
         System.out.println("0: 종료");
     }
 
-    public int chooseActivityType() {
-        // 개방수역, 제한수역 선택 인터페이스
-        return getNaturalNumber();
-    }
-
     public void displayOpenWaterActivityMenu() {
         System.out.println("개방수역 활동을 선택하세요:");
         System.out.println("1: 자격증 취득");
