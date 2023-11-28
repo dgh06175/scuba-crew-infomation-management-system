@@ -112,8 +112,7 @@
 - 개방수역 인원 제한
 - 제한수역 인원 제한
 
-<details>
-<summary>테이블 생성 MySQL 코드 보기 (삼각형 클릭)</summary>
+### 테이블 생성 MySQL 코드
 
 ```mysql
 CREATE TABLE recruitment_application (
