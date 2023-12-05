@@ -2,7 +2,7 @@
 
 ## 🍳 사용 기술
 
-`Java`, `MySQL`
+`Java`, `JPA`, `MySQL`
 
 ## 📋 설계 목적
 
