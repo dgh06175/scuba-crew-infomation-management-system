@@ -2,7 +2,7 @@
 
 ## 🍳 사용 기술
 
-`Java`, `MySQL`
+`Java`, `JPA`, `MySQL`
 
 ## 📋 설계 목적
 
@@ -61,8 +61,7 @@
 - 추후 회비 관련 기능 추가
 
 ## 📊 테이블 명세
-
-<img width="1024" alt="image" src="https://github.com/dgh06175/scuba-member-infomation-management-system/assets/77305722/1d7777ee-809e-43ef-96a9-f8bf31bf55bd">
+<img width="930" alt="image" src="https://github.com/dgh06175/scuba-member-infomation-management-system/assets/77305722/c5c96979-1792-4d2d-9668-d05b46350e03">
 
 ### 1. 가두모집 지원서
 
@@ -73,7 +72,7 @@
 - 휴대폰 번호
 - 주소
 - 가입 목적
-- 스쿠버다이빙 자격증 여부
+- 스쿠버 자격증 ID (외래키)
 - 동아리 꼭 가입하고 싶은 이유
 
 ### 2. 동아리 회원 인적사항
@@ -87,7 +86,7 @@
 
 ### 3. 동아리 회원 스쿠버 경험 정보
 - 학번 (외래키)
-- 스쿠버 자격증
+- 스쿠버 자격증 ID (외래키)
 - 수영장 교육 횟수
 - 로그 수
 
@@ -112,8 +111,7 @@
 - 개방수역 인원 제한
 - 제한수역 인원 제한
 
-<details>
-<summary>테이블 생성 MySQL 코드 보기 (삼각형 클릭)</summary>
+### 테이블 생성 MySQL 코드
 
 ```mysql
 CREATE TABLE recruitment_application (
@@ -124,8 +122,9 @@ CREATE TABLE recruitment_application (
     phone_number VARCHAR(15) NOT NULL,
     address VARCHAR(200) NOT NULL,
     purpose_of_joining TEXT,
-    scuba_certification_name ENUM('NONE', 'OW', 'AOW', 'RESCUE', 'MASTER', 'INSTRUCTOR'),
+    scuba_certification_id int,
     reason_for_joining TEXT
+    FOREIGN KEY (certification_id) REFERENCES certification(certification_id)
 );
 
 CREATE TABLE club_member_information (
@@ -139,10 +138,11 @@ CREATE TABLE club_member_information (
 
 CREATE TABLE scuba_experience_information (
     student_id INT(10) NOT NULL,
-    scuba_certification_name ENUM('NONE', 'OW', 'AOW', 'RESCUE', 'MASTER', 'INSTRUCTOR'),
+    scuba_certification_id int,
     restricted_water_training_count INT,
     log_count INT,
-    FOREIGN KEY (student_id) REFERENCES club_member_information(student_id)
+    FOREIGN KEY (student_id) REFERENCES club_member_information(student_id),
+    FOREIGN KEY (certification_id) REFERENCES certification(certification_id)
 );
 
 CREATE TABLE physical_information (
