@@ -36,11 +36,14 @@ public class MemberService {
                 .getResultList();
     }
 
-    public List<ClubMemberInformation> getMembersWithCertification(String certification) {
+    public List<ClubMemberInformation> getMembersWithCertificationAndTrainingCount(String certification, int trainingCount) {
         return entityManager.createQuery(
-                        "SELECT s.clubMemberInformation FROM ScubaExperienceInformation s WHERE s.scubaCertificationName = :certification",
+                        "SELECT c FROM ClubMemberInformation c WHERE c.studentId IN (" +
+                                "SELECT s.studentId FROM ScubaExperienceInformation s " +
+                                "WHERE s.scubaCertificationName = :certification AND s.restrictedWaterTrainingCount >= :trainingCount)",
                         ClubMemberInformation.class)
                 .setParameter("certification", certification)
+                .setParameter("trainingCount", trainingCount)
                 .getResultList();
     }
 

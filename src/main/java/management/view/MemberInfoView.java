@@ -20,9 +20,9 @@ public class MemberInfoView {
         System.out.println("1. 인적 사항 조회");
         System.out.println("2. 스쿠버 관련 정보 조회");
         System.out.println("3. 신체 정보 조회");
-        System.out.println("4. 자격증 인원 조회");
+        System.out.println("4. 자격증별 인원수 조회");
         System.out.println("5. 일정 로그 개수 이상 인원 조회");
-        System.out.println("6. 자격증별 인원수 조회");
+        System.out.println("6. 특정 자격증 중에 특정 로그 이상 회원 조회");
         System.out.println("0. 메인 메뉴로 나가기");
     }
 

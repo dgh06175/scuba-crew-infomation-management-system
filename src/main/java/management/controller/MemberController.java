@@ -35,14 +35,14 @@ public class MemberController {
                 case 3: // 신체 정보 조회
                     displayPhysicalInformation();
                     break;
-                case 4: // 자격증 인원 조회
-                    displayMembersWithCertification();
+                case 4: // 자격증별 인원수 조회
+                    displayMembersByCertificationCount();
                     break;
                 case 5: // 일정 로그 개수 이상 인원 조회
                     displayMembersLogCount();
                     break;
-                case 6: // 자격증별 인원수 조회
-                    displayMembersByCertificationCount();
+                case 6: // 특정 자격증을 가진 회원들 중에서 특정 훈련 횟수 이상을 가진 회원들의 목록을 조회
+                    displayMembersWithCertificationAndTrainingCount();
                     break;
                 case 0:
                     running = false;
@@ -82,11 +82,14 @@ public class MemberController {
         memberInfoView.displayPhysicalInformation(physicalInformation);
     }
 
-    private void displayMembersWithCertification() {
+    private void displayMembersWithCertificationAndTrainingCount() {
         String certification = memberInfoView.readCertification();
-        List<ClubMemberInformation> members = memberService.getMembersWithCertification(certification);
+        int trainingCount = memberInfoView.readLogCount();
+
+        List<ClubMemberInformation> members = memberService.getMembersWithCertificationAndTrainingCount(certification, trainingCount);
         memberInfoView.displayMembers(members);
     }
+
 
     private void displayMembersLogCount() {
         int logCount = memberInfoView.readLogCount();
