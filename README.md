@@ -1,5 +1,8 @@
 # 🤿 스쿠버 동아리원 정보 관리 시스템
 
+Scuba Crew Information Management System
+> SCIMS
+
 ## 🍳 사용 기술
 
 `Java`, `JPA`, `MySQL`
