@@ -1,7 +1,5 @@
 package management.view;
 
-import static management.util.InputUtil.getNaturalNumber;
-
 public class MainMenuView {
     public void displayMenu() {
         System.out.println();

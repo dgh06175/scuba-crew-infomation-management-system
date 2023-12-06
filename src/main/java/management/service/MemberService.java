@@ -36,17 +36,6 @@ public class MemberService {
                 .getResultList();
     }
 
-    public List<ClubMemberInformation> getMembersWithCertificationAndTrainingCount(String certification, int trainingCount) {
-        return entityManager.createQuery(
-                        "SELECT c FROM ClubMemberInformation c WHERE c.studentId IN (" +
-                                "SELECT s.studentId FROM ScubaExperienceInformation s " +
-                                "WHERE s.scubaCertificationName = :certification AND s.restrictedWaterTrainingCount >= :trainingCount)",
-                        ClubMemberInformation.class)
-                .setParameter("certification", certification)
-                .setParameter("trainingCount", trainingCount)
-                .getResultList();
-    }
-
     public List<ClubMemberInformation> getMembersWithLogCountGreaterThan(int logCount) {
         return entityManager.createQuery(
                         "SELECT s.clubMemberInformation FROM ScubaExperienceInformation s WHERE s.logCount > :logCount",
@@ -68,4 +57,15 @@ public class MemberService {
                 ));
     }
 
+    public List<ClubMemberInformation> getMembersWithCertificationAndTrainingCount(String certification, int logCount) {
+        return entityManager.createQuery(
+                        "SELECT c FROM ClubMemberInformation c WHERE c.studentId IN (" +
+                                "SELECT s.studentId FROM ScubaExperienceInformation s " +
+                                "WHERE s.scubaCertificationName = :certification AND " +
+                                "s.logCount >= :logCount)",
+                        ClubMemberInformation.class)
+                .setParameter("certification", certification)
+                .setParameter("logCount", logCount)
+                .getResultList();
+    }
 }

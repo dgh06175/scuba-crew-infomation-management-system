@@ -7,22 +7,29 @@ import java.util.List;
 
 public class RecruitmentView {
     public void displayRecruitmentMenu() {
-        System.out.println("모집 관련 메뉴:");
+        System.out.println("###### 가두모집 관리 화면 ######");
         System.out.println("1: 지원 내역 출력");
         System.out.println("2: 합격 처리");
         System.out.println("0: 종료");
     }
 
     public void displayApplications(List<RecruitmentApplication> applications) {
-        System.out.println("지원 내역:");
+        final String APPLICATION_PRINT_FORMAT = "| %-10s | %-8s | %-10s | %-6s | %-50s | %-10s | %-40s |%n";
+
+        System.out.printf(APPLICATION_PRINT_FORMAT, "학번", "이름", "학과", "학년", "지원 목적", "자격증 여부", "지원 이유");
         for (RecruitmentApplication app : applications) {
-            System.out.println("학번: " + app.getStudentId() + ", 이름: " + app.getName() +
-                    ", 학과: " + app.getDepartment() + ", 학년: " + app.getGrade() +
-                    ", 지원 목적: " + app.getPurposeOfJoining() +
-                    ", 자격증 여부: " + app.getScubaCertificationName() +
-                    ", 지원 이유: " + app.getReasonForJoining());
+            String studentId = Long.toString(app.getStudentId());
+            String name = app.getName();
+            String department = app.getDepartment();
+            String grade = Integer.toString(app.getGrade());
+            String purpose = app.getPurposeOfJoining();
+            String certName = app.getScubaCertificationName() != null ? app.getScubaCertificationName() : "N/A";
+            String reason = app.getReasonForJoining();
+
+            System.out.printf(APPLICATION_PRINT_FORMAT, studentId, name, department, grade, purpose, certName, reason);
         }
     }
+
 
     public long selectApplicantForAcceptance(List<RecruitmentApplication> applications) {
         System.out.println("합격 처리할 지원자의 학번을 입력하세요:");

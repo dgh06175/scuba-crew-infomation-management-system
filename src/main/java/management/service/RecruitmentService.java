@@ -1,6 +1,6 @@
 package management.service;
 
-import javax.persistence.EntityTransaction;
+import java.util.function.Consumer;
 import management.model.RecruitmentApplication;
 import management.model.ClubMemberInformation;
 import javax.persistence.EntityManager;
@@ -20,20 +20,16 @@ public class RecruitmentService {
     }
 
     public void acceptApplicant(long studentId) throws Exception {
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
+        RecruitmentApplication application = entityManager.find(RecruitmentApplication.class, studentId);
+        if (application == null) {
+            throw new Exception("해당 학번의 지원자가 존재하지 않습니다.");
+        }
 
-            RecruitmentApplication application = entityManager.find(RecruitmentApplication.class, studentId);
-            if (application == null) {
-                throw new Exception("해당 학번의 지원자가 존재하지 않습니다.");
-            }
-
-            ClubMemberInformation existingMember = entityManager.find(ClubMemberInformation.class, studentId);
-            if (existingMember != null) {
-                throw new Exception("이미 동아리원으로 등록된 학번입니다.");
-            }
-
+        ClubMemberInformation existingMember = entityManager.find(ClubMemberInformation.class, studentId);
+        if (existingMember != null) {
+            throw new Exception("이미 동아리원으로 등록된 학번입니다.");
+        }
+        withTransaction(em -> {
             ClubMemberInformation newMember = new ClubMemberInformation();
             newMember.setStudentId(application.getStudentId());
             newMember.setName(application.getName());
@@ -43,12 +39,17 @@ public class RecruitmentService {
             newMember.setAddress(application.getAddress());
 
             entityManager.persist(newMember);
-
             entityManager.remove(application);
+        });
+    }
 
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
+    private void withTransaction(Consumer<EntityManager> action) {
+        try {
+            entityManager.getTransaction().begin();
+            action.accept(entityManager);
+            entityManager.getTransaction().commit();
+        } catch (RuntimeException e) {
+            entityManager.getTransaction().rollback();
             throw e;
         }
     }

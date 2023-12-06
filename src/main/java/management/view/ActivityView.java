@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ActivityView {
     public void displayActivityMenu() {
-        System.out.println("활동 유형을 선택하세요:");
+        System.out.println("###### 스쿠버 활동 계획 화면 ######");
         System.out.println("1: 개방수역");
         System.out.println("2: 제한수역");
         System.out.println("0: 종료");
