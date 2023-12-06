@@ -14,7 +14,7 @@ public class RecruitmentView {
     }
 
     public void displayApplications(List<RecruitmentApplication> applications) {
-        final String APPLICATION_PRINT_FORMAT = "| %-10s | %-8s | %-10s | %-6s | %-50s | %-10s | %-40s |%n";
+        final String APPLICATION_PRINT_FORMAT = "| %-10s | %-8s | %-10s | %-6s | %-20s | %-10s | %-40s |%n";
 
         System.out.printf(APPLICATION_PRINT_FORMAT, "학번", "이름", "학과", "학년", "지원 목적", "자격증 여부", "지원 이유");
         for (RecruitmentApplication app : applications) {

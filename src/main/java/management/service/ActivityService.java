@@ -1,6 +1,7 @@
 package management.service;
 
 import java.util.function.Consumer;
+import management.database.DatabaseManager;
 import management.model.ClubMemberInformation;
 import management.model.PhysicalInformation;
 import management.model.ScubaExperienceInformation;
@@ -10,66 +11,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActivityService {
-    private final EntityManager entityManager;
+    private final DatabaseManager databaseManager;
 
-    public ActivityService(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public ActivityService(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
     }
-
     public List<ClubMemberInformation> getAllMembers() {
         // 모든 동아리원 정보를 조회하는 쿼리
-        return entityManager.createQuery(
-                        "SELECT m FROM ClubMemberInformation m", ClubMemberInformation.class)
+        return databaseManager.getEntityManager().createQuery(
+                        "SELECT m FROM ClubMemberInformation m",ClubMemberInformation.class)
                 .getResultList();
     }
 
     public void updateMembersForCertification(String certification, List<ClubMemberInformation> members) {
-        withTransaction(em -> {
-            for (ClubMemberInformation member : members) {
-                ScubaExperienceInformation scubaInfo =
-                        em.find(ScubaExperienceInformation.class, member.getStudentId());
-                scubaInfo.setScubaCertificationName(certification);
-                scubaInfo.setLogCount(scubaInfo.getLogCount() + 4);
-                em.merge(scubaInfo);
-            }
-        });
-
-    }
-    private void withTransaction(Consumer<EntityManager> action) {
-        try {
-            entityManager.getTransaction().begin();
-            action.accept(entityManager);
-            entityManager.getTransaction().commit();
-        } catch (RuntimeException e) {
-            entityManager.getTransaction().rollback();
-            throw e;
+        for (ClubMemberInformation member : members) {
+            ScubaExperienceInformation scubaInfo = databaseManager.find(ScubaExperienceInformation.class, member.getStudentId());
+            scubaInfo.setScubaCertificationName(certification);
+            scubaInfo.setLogCount(scubaInfo.getLogCount() + 4);
+            databaseManager.update(scubaInfo);
         }
     }
 
     public void updateMembersForFunDiving(List<ClubMemberInformation> members) {
-        // 펀다이빙 활동 업데이트 로직
-        withTransaction(em -> {
-            for (ClubMemberInformation member : members) {
-                ScubaExperienceInformation scubaInfo =
-                        em.find(ScubaExperienceInformation.class, member.getStudentId());
-                scubaInfo.setLogCount(scubaInfo.getLogCount() + 1); // 로그 수 증가
-                em.merge(scubaInfo);
-            }
-        });
+        for (ClubMemberInformation member : members) {
+            ScubaExperienceInformation scubaInfo = databaseManager.find(ScubaExperienceInformation.class, member.getStudentId());
+            scubaInfo.setLogCount(scubaInfo.getLogCount() + 1); // 로그 수 증가
+            databaseManager.update(scubaInfo);
+        }
     }
 
     public void updateMembersForRestrictedWaterActivity(List<ClubMemberInformation> members) {
-        withTransaction(em -> {
-            for (ClubMemberInformation member : members) {
-                ScubaExperienceInformation scubaInfo =
-                        entityManager.find(ScubaExperienceInformation.class, member.getStudentId());
-                scubaInfo.setRestrictedWaterTrainingCount(scubaInfo.getRestrictedWaterTrainingCount() + 1);
-                entityManager.merge(scubaInfo);
-            }
-        });
+        for (ClubMemberInformation member : members) {
+            ScubaExperienceInformation scubaInfo = databaseManager.find(ScubaExperienceInformation.class, member.getStudentId());
+            scubaInfo.setRestrictedWaterTrainingCount(scubaInfo.getRestrictedWaterTrainingCount() + 1);
+            databaseManager.update(scubaInfo);
+        }
     }
-
-
 
     public Map<String, Integer> calculateRequiredItems(List<ClubMemberInformation> participatingMembers) {
         Map<String, Integer> requiredItems = new HashMap<>();
@@ -77,8 +54,7 @@ public class ActivityService {
         Map<String, Integer> finSizes = new HashMap<>();
 
         for (ClubMemberInformation member : participatingMembers) {
-            PhysicalInformation physicalInfo =
-                    entityManager.find(PhysicalInformation.class, member.getStudentId());
+            PhysicalInformation physicalInfo = databaseManager.find(PhysicalInformation.class, member.getStudentId());
             if (physicalInfo != null) {
                 updateEquipmentCount(suitSizes, calculateSuitSize(physicalInfo.getHeight(), physicalInfo.getWeight()));
                 updateEquipmentCount(finSizes, calculateFinSize(physicalInfo.getShoeSize()));
@@ -118,6 +94,6 @@ public class ActivityService {
     }
 
     public ScubaExperienceInformation getMemberScubaExperience(Long studentId) {
-        return entityManager.find(ScubaExperienceInformation.class, studentId);
+        return databaseManager.getEntityManager().find(ScubaExperienceInformation.class, studentId);
     }
 }

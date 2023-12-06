@@ -22,11 +22,11 @@ import management.view.RecruitmentView;
 public class Application {
     public static void main(String[] args) {
         DatabaseManager dbManager = new DatabaseManager();
-        EntityManager entityManager = dbManager.getEntityManager();
 
-        MemberService memberService = new MemberService(entityManager);
-        ActivityService activityService = new ActivityService(entityManager);
-        RecruitmentService recruitmentService = new RecruitmentService(entityManager);
+        MemberService memberService = new MemberService(dbManager);
+        ActivityService activityService = new ActivityService(dbManager);
+        RecruitmentService recruitmentService = new RecruitmentService(dbManager);
+
         new MainController(
                 new MemberController(memberService, new MemberInfoView()),
                 new ActivityController(activityService, new ActivityView()),
