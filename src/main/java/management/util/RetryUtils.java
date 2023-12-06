@@ -4,9 +4,11 @@ import static management.util.InputUtil.getNaturalNumber;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
-import management.view.OutputView;
+import management.view.ErrorOutputView;
 
 public class RetryUtils {
+    private RetryUtils(){}
+
     public static int requestMenuNumber(int...menuNumbers) {
         return RetryUtils.executeWithRetry(() -> {
             int userInput = readUserInput();
@@ -31,7 +33,7 @@ public class RetryUtils {
             try {
                 return action.get();
             } catch (Exception e) {
-                OutputView.printErrorMessage(e);
+                ErrorOutputView.printErrorMessage(e);
             }
         }
     }
