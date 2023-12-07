@@ -10,7 +10,7 @@ import management.model.PhysicalInformation;
 import management.model.ScubaExperienceInformation;
 
 public class MemberInfoView {
-    private static final String PRINT_FORMAT = "%-15s %-8s %-20s\n";
+    private static final String PRINT_FORMAT = "%-15s %-8s %-15s %-5s %-15s %-30s\n";
     private static final String SCUBA_PRINT_FORMAT = "%-8s %-12s %-20s %-10s\n";
     private static final String PHYSICAL_PRINT_FORMAT = "%-10s %-5s %-10s %-5s %-8s %-10s %-20s\n";
 
@@ -46,9 +46,9 @@ public class MemberInfoView {
     }
 
     public void displayMembers(List<ClubMemberInformation> members) {
-        System.out.printf(PRINT_FORMAT, "학번", "이름", "학과");
+        System.out.printf(PRINT_FORMAT, "학번", "이름", "학과", "학년", "번호", "주소");
         for (ClubMemberInformation member : members) {
-            System.out.printf(PRINT_FORMAT, member.getStudentId(), member.getName(), member.getDepartment());
+            System.out.printf(PRINT_FORMAT, member.getStudentId(), member.getName(), member.getDepartment(), member.getGrade(), member.getPhoneNumber(), member.getAddress());
         }
     }
 
